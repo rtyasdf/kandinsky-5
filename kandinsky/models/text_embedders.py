@@ -134,7 +134,7 @@ class Qwen2_5_VLTextEmbedder:
                 max_length=max_length,
                 truncation=True,
                 return_tensors="pt",
-                padding="max_length",
+                padding=True #"max_length",
             ).to(self.model.device)
 
             with torch.no_grad():
