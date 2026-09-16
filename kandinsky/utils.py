@@ -136,7 +136,7 @@ def get_video_pipeline(
             no_cfg = True
         set_magcache_params(dit, mag_ratios, num_steps, no_cfg)
 
-    state_dict = load_file(conf.model.checkpoint_path, device='cpu')
+    state_dict = torch.load(conf.model.checkpoint_path, map_location='cpu')
     dit.load_state_dict(state_dict, assign=True)
 
     if not offload and world_size == 1:
