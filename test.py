@@ -16,7 +16,7 @@ def validate_args(args):
     elif "t2i" in args.config:
         supported_sizes = [(1024, 1024), (640, 1408), (1408, 640), (768, 1280), (1280, 768), (896, 1152), (1152, 896)]
     else:
-        supported_sizes = [(512, 512), (512, 768), (768, 512), (1280, 768), (768, 1280), (1024, 1024), (640, 1408), (1408, 640), (768, 1280), (1280, 768), (896, 1152), (1152, 896)]
+        supported_sizes = [(256, 256), (512, 512), (512, 768), (768, 512), (1280, 768), (768, 1280), (1024, 1024), (640, 1408), (1408, 640), (768, 1280), (1280, 768), (896, 1152), (1152, 896)]
     if not size in supported_sizes:
         raise NotImplementedError(
             f"Provided size of video is not supported: {size}")
@@ -72,14 +72,14 @@ def parse_args():
         "--width",
         type=int,
         default=768,
-        choices=[512, 640, 768, 896, 1152, 1024, 1280],
+        choices=[256, 512, 640, 768, 896, 1152, 1024, 1280],
         help="Width of the video in pixels"
     )
     parser.add_argument(
         "--height",
         type=int,
         default=512,
-        choices=[512, 640, 768, 896, 1152, 1024, 1280],
+        choices=[256, 512, 640, 768, 896, 1152, 1024, 1280],
         help="Height of the video in pixels"
     )
     parser.add_argument(
@@ -275,6 +275,7 @@ if __name__ == "__main__":
                  scheduler_scale=args.scheduler_scale,
                  expand_prompts=args.expand_prompt,
                  save_path=args.output_filename,
-                 seed=args.seed)
+                 seed=args.seed,
+                 negative_caption=args.negative_prompt)
     print(f"TIME ELAPSED: {time.perf_counter() - start_time}")
     print(f"Generated file is saved to {args.output_filename}")
