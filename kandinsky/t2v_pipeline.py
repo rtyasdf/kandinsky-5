@@ -33,6 +33,7 @@ def read_safetensors_json(file_path):
 
 class Kandinsky5T2VPipeline:
     RESOLUTIONS = {
+        256: [(256, 256)],
         512: [(512, 512), (512, 768), (768, 512)],
         1024: [(1024, 1024), (640, 1408), (1408, 640), (768, 1280), (1280, 768), (896, 1152), (1152, 896)],
     }
@@ -164,7 +165,8 @@ class Kandinsky5T2VPipeline:
                 torch.distributed.broadcast_object_list(caption, 0)
                 caption = caption[0]
 
-        shape = (1, num_frames, height // 8, width // 8, 16)
+        # shape = (1, num_frames, height // 8, width // 8, 16)
+        shape = (1, num_frames, height // 16, width // 16, 32)
 
         # GENERATION
         images = generate_sample(
@@ -346,3 +348,4 @@ class Kandinsky5T2VPipeline:
                 else:
                     module.disable_adapters = True
         self.peft_trigger = ""
+
