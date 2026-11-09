@@ -325,7 +325,11 @@ def generate_sample(
                 latent_visual.shape[-1],
             )
             images = images.to(device=vae_device)
-            images = (images / vae.config.scaling_factor).permute(0, 4, 1, 2, 3)
+            if conf.model.vae.dim == 2:
+                images = images.squeeze(1) # remove time dimension for 2d VAE
+                images = (images / vae.config.scaling_factor).permute(0, 3, 1, 2)
+            else:
+                images = (images / vae.config.scaling_factor).permute(0, 4, 1, 2, 3)
             images = vae.decode(images).sample
             images = ((images.clamp(-1.0, 1.0) + 1.0) * 127.5).to(torch.uint8)
 
