@@ -1224,7 +1224,7 @@ def build_vae(conf):
     elif conf.name == "flux2":
         from diffusers.models import AutoencoderKLFlux2
         vae = AutoencoderKLFlux2.from_pretrained(conf.checkpoint_path, subfolder="vae", torch_dtype=torch.bfloat16)
-        vae.config.scaling_factor = conf.model.vae.scale
+        vae.config.scaling_factor = conf.scale
         return vae
     elif conf.name == 'hunyuan15':
         from diffusers import AutoencoderKLHunyuanVideo15
