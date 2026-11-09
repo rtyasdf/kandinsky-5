@@ -166,7 +166,10 @@ class Kandinsky5T2VPipeline:
                 caption = caption[0]
 
         # shape = (1, num_frames, height // 8, width // 8, 16)
-        shape = (1, num_frames, height // 16, width // 16, 32)
+        shape = (1, num_frames,
+                 height // self.conf.model.vae.factor,
+                 width // self.conf.model.vae.factor,
+                 self.conf.model.dit_params.in_visual_dim)
 
         # GENERATION
         images = generate_sample(
